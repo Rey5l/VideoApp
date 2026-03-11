@@ -11,9 +11,14 @@ import java.io.File
 
 class VideoCacheManager(application: Application) {
     private val sharedPreferences =
-        application.getSharedPreferences(PlayerConstants.PREF_NAME, Context.MODE_PRIVATE)
+        application.getSharedPreferences(
+            PlayerConstants.PREF_NAME,
+            Context.MODE_PRIVATE)
     private val gson = Gson()
-    private val cacheDir: File = File(application.cacheDir, PlayerConstants.CACHE_DIR_NAME)
+    private val cacheDir: File = File(
+        application.cacheDir,
+        PlayerConstants.CACHE_DIR_NAME
+    )
 
     fun saveVideo(videos: List<VideoItem>) {
         val json = gson.toJson(videos)
@@ -33,7 +38,8 @@ class VideoCacheManager(application: Application) {
     }
 
     fun isVideoCached(url: String): Boolean {
-        val fileName = url.substringAfterLast("/")
+        val
+                 fileName = url.substringAfterLast("/")
         return File(cacheDir, fileName).exists()
     }
 

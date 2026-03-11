@@ -52,23 +52,6 @@ object VideoAppModule {
         return VideoRepositoryImpl(videoApi = videoApi, application = application)
     }
 
-    @OptIn(UnstableApi::class)
-    @Provides
-    @Singleton
-    fun provideVideoPlayer(app: Application): Player {
-        val cacheDir = File(app.cacheDir, PlayerConstants.CACHE_DIR_NAME)
-        val cache = SimpleCache(cacheDir, NoOpCacheEvictor())
-
-        val cacheDataSourceFactory = CacheDataSource.Factory()
-            .setCache(cache)
-            .setUpstreamDataSourceFactory(DefaultDataSource.Factory(app))
-
-        val mediaSourceFactory = ProgressiveMediaSource.Factory(cacheDataSourceFactory)
-
-        return ExoPlayer.Builder(app)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build()
-    }
 
     @Provides
     @Singleton
@@ -80,9 +63,5 @@ object VideoAppModule {
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesVideoCacheManager(application: Application): VideoCacheManager {
-        return VideoCacheManager(application)
-    }
+
 }
